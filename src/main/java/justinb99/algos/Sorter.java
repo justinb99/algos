@@ -60,9 +60,11 @@ public class Sorter {
             + iEnd
             + ", values="
             + Arrays.toString(values));
+
     var pivot = values[iEnd];
     var pivotIndex = iStart;
     System.out.println("quickSortPartition: pivot=" + pivot + ", pivotIndex=" + pivotIndex);
+
     for (var iter = iStart; iter <= iEnd; iter++) {
       System.out.println(
           "quickSortPartition: iter="
@@ -99,5 +101,64 @@ public class Sorter {
       values[index1] = values[index2];
       values[index2] = temp;
     }
+  }
+
+  public static void heapSort(int[] values) {
+    heapify(values);
+    var iEnd = values.length - 1;
+    while (iEnd > 0) {
+      swap(values, iEnd, 0);
+      System.out.print(values[iEnd] + ", ");
+      iEnd -= 1;
+      siftDown(values, 0, iEnd);
+    }
+    System.out.println();
+  }
+
+  public static void heapify(int[] values) {
+    heapify(values, values.length);
+  }
+
+  private static void heapify(int[] values, int length) {
+    var iStart = heapParentIndexOf(length - 1);
+    while (iStart >= 0) {
+      siftDown(values, iStart, length - 1);
+      iStart -= 1;
+    }
+  }
+
+  private static void siftDown(int[] values, int iStart, int iEnd) {
+    var iRoot = iStart;
+    while (heapLeftChildIndexOf(iRoot) <= iEnd) {
+      var iChild = heapLeftChildIndexOf(iRoot);
+      var iSwap = iRoot;
+
+      if (values[iSwap] < values[iChild]) {
+        iSwap = iChild;
+      }
+
+      if (iChild + 1 <= iEnd && values[iSwap] < values[iChild + 1]) {
+        iSwap = iChild + 1;
+      }
+
+      if (iSwap == iRoot) {
+        return;
+      } else {
+        swap(values, iRoot, iSwap);
+        iRoot = iSwap;
+      }
+    }
+  }
+
+  private static int heapParentIndexOf(int index) {
+    return (index - 1) / 2;
+  }
+
+  private static int heapLeftChildIndexOf(int index) {
+    return 2 * index + 1;
+  }
+
+  private static int heapRightChildIndexOf(int index) {
+    return 2 * index + 2;
   }
 }

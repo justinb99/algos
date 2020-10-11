@@ -3,6 +3,7 @@ package justinb99.algos;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -55,10 +56,22 @@ class SorterTest {
 
   @Test
   void quickSort() {
-    testSort(10, Sorter::quickSort);
-//    testSort(501, Sorter::quickSort);
+    //    testSort(10, Sorter::quickSort);
+    //    testSort(501, Sorter::quickSort);
+    var sortedValues = new int[] {5, 4, 3, 2, 1, 6};
+    Sorter.quickSort(sortedValues);
+  }
 
-//    var sortedValues = new int[] { 1, 2, 3, 4, 5, 6 };
-//    Sorter.quickSort(sortedValues);
+  @Test
+  void heapify() {
+    var values = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    Sorter.heapify(values);
+    System.out.println(Arrays.toString(values));
+  }
+
+  @Test
+  void heapSort() {
+    testSort(10, Sorter::heapSort);
+    testSort(11, Sorter::heapSort);
   }
 }
